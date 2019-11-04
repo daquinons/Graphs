@@ -84,7 +84,23 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        q = Queue()
+        visited = set()
+        q.enqueue([starting_vertex])
+
+        while q.size() > 0:
+            path = q.dequeue()
+            vertex = path[-1]
+
+            if vertex == destination_vertex:
+                return path
+
+            if vertex not in visited:
+                visited.add(vertex)
+                for neighbor in self.vertices[vertex]:
+                    path_copy = list(path)
+                    path_copy.append(neighbor)
+                    q.enqueue(path_copy)
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -166,7 +182,9 @@ if __name__ == '__main__':
     Valid BFS path:
         [1, 2, 4, 6]
     '''
+    print("---- bfs ----")
     print(graph.bfs(1, 6))
+    print("------------")
 
     '''
     Valid DFS paths:
