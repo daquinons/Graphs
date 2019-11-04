@@ -9,6 +9,7 @@ class Graph:
 
     def __init__(self):
         self.vertices = {}
+        self.visited = set()
 
     def add_vertex(self, vertex):
         """
@@ -63,7 +64,19 @@ class Graph:
         beginning from starting_vertex.
         This should be done using recursion.
         """
-        pass  # TODO
+        self.visited = set()
+
+        def dft_recursive_print(starting_vertex):
+            if starting_vertex not in self.visited:
+                self.visited.add(starting_vertex)
+                print(starting_vertex)
+            for v in self.vertices[starting_vertex]:
+                if v not in self.visited:
+                    print(v)
+                    self.visited.add(v)
+                    dft_recursive_print(v)
+
+        dft_recursive_print(starting_vertex)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -107,8 +120,9 @@ if __name__ == '__main__':
     Should print:
         {1: {2}, 2: {3, 4}, 3: {5}, 4: {6, 7}, 5: {3}, 6: {3}, 7: {1, 6}}
     '''
+    print("---- vertices ----")
     print(graph.vertices)
-
+    print("------------")
     '''
     Valid DFT paths:
         1, 2, 3, 5, 4, 6, 7
@@ -116,8 +130,9 @@ if __name__ == '__main__':
         1, 2, 4, 7, 6, 3, 5
         1, 2, 4, 6, 3, 5, 7
     '''
+    print("---- dft ----")
     graph.dft(1)
-
+    print("------------")
     '''
     Valid BFT paths:
         1, 2, 3, 4, 5, 6, 7
@@ -133,8 +148,9 @@ if __name__ == '__main__':
         1, 2, 4, 3, 7, 6, 5
         1, 2, 4, 3, 7, 5, 6
     '''
+    print("---- bft ----")
     graph.bft(1)
-
+    print("------------")
     '''
     Valid DFT recursive paths:
         1, 2, 3, 5, 4, 6, 7
@@ -142,7 +158,9 @@ if __name__ == '__main__':
         1, 2, 4, 7, 6, 3, 5
         1, 2, 4, 6, 3, 5, 7
     '''
+    print("---- dft_recursive ----")
     graph.dft_recursive(1)
+    print("------------")
 
     '''
     Valid BFS path:
