@@ -1,14 +1,17 @@
+import random
 
 
 class User:
     def __init__(self, name):
         self.name = name
 
+
 class SocialGraph:
     def __init__(self):
         self.lastID = 0
         self.users = {}
         self.friendships = {}
+        self.total_friendships = 0
 
     def addFriendship(self, userID, friendID):
         """
@@ -21,6 +24,7 @@ class SocialGraph:
         else:
             self.friendships[userID].add(friendID)
             self.friendships[friendID].add(userID)
+            self.total_friendships += 1
 
     def addUser(self, name):
         """
@@ -44,11 +48,19 @@ class SocialGraph:
         self.lastID = 0
         self.users = {}
         self.friendships = {}
+        self.total_friendships = 0
         # !!!! IMPLEMENT ME
 
         # Add users
+        for num_user in range(numUsers):
+            self.addUser("User " + str(num_user))
 
         # Create friendships
+        while self.total_friendships < (numUsers * avgFriendships) / 2:
+            choices = (random.choice(list(self.users.keys())),
+                       random.choice(list(self.users.keys())))
+            if choices[0] != choices[1] and choices[0] < choices[1] and choices[1] not in self.friendships[choices[0]]:
+                self.addFriendship(choices[0], choices[1])
 
     def getAllSocialPaths(self, userID):
         """
